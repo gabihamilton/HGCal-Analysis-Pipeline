@@ -48,14 +48,14 @@ Follow these steps to set up the environment and install the required packages.
 
 ## Usage
 
-The main script `analysis_script.py` is run from the command line and takes the name of your data folder as an input.
+The main script `Unpack.py` is run from the command line and takes the name of your data folder as an input.
 
 ### Project Structure
 
 Organize your data files in a folder. The script will look for this folder in the same directory where it is located.
 ```
 your-project-directory/
-├── analysis_script.py
+├── Unpack.py
 └── data/
 ├── data_file_1.txt
 ├── data_file_2.txt
@@ -67,7 +67,7 @@ your-project-directory/
 To run the script, use the following command, replacing `data` with the name of your data folder.
 
 ```bash
-python analysis_script.py data
+python Unpack.py data
 ```
 
 ### Optional Arguments
@@ -75,7 +75,7 @@ python analysis_script.py data
 * **`--marker_link`**: You can specify which link column contains the start-of-packet marker. It defaults to `link6`. If your marker is in a different link (e.g., `link0`), use this option:
 
     ```bash
-    python analysis_script.py data --marker_link link0
+    python Unpack.py data --marker_link link0
     ```
 
 ### Output
