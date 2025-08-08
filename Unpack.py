@@ -266,58 +266,51 @@ def data_to_pkt(df, marker_link='link6'):
 # PART 3: DATA EXTRACTION FOR PLOTTING
 #==============================================================================
 
-def retrieve_ADCs(df, active_erx, channels):
+def retrieve_ADCs(df, active_erx, channels, event_num=None):
     adcs, adcms, toas, noises = [], [], [], []
-    events = 0
+    
+    num_events_in_df = len(df)
+    if event_num is not None and event_num >= num_events_in_df:
+        print(f"Warning: Event number {event_num} is out of bounds. The data has {num_events_in_df} events. Plotting average instead.")
+        event_num = None # Revert to averaging
+
     for erx in active_erx:
         for ch in channels:
             col_name = f"eRx{int(erx):02d}_ChData{int(ch):02d}"
             if col_name not in df.columns or df[col_name].iloc[0] == "":
-                # Append placeholders if channel is inactive or not present
                 adcs.append(0); adcms.append(0); toas.append(0); noises.append(0)
                 continue
             
-            adc_evts, adcm_evts, toa_evts = [], [], []
-            for raw_str in df[col_name].dropna():
+            # If a specific event is requested, get its data
+            if event_num is not None:
+                raw_str = df[col_name].iloc[event_num]
                 if raw_str and len(raw_str) == 32:
-                    adcm_evts.append(int(raw_str[2:12], 2))
-                    adc_evts.append(int(raw_str[12:22], 2))
-                    toa_evts.append(int(raw_str[22:], 2))
-            
-            events = len(adc_evts)
-            adcs.append(np.mean(adc_evts) if adc_evts else 0)
-            adcms.append(np.mean(adcm_evts) if adcm_evts else 0)
-            toas.append(np.mean(toa_evts) if toa_evts else 0)
-            noises.append(np.std(adc_evts) if adc_evts else 0)
-    
-    print(f"Processed {events} events")
-    return adcs, adcms, toas, noises
-
-def retrieve_ADCs_perevent(df, active_erx, channels):
-    adc_events_per_channel = []
-    active_channels_map = [] 
-
-    for erx in active_erx:
-        for ch in channels:
-            col_name = f"eRx{int(erx):02d}_ChData{int(ch):02d}"
-            if col_name not in df.columns or df[col_name].iloc[0] == "":
-                continue
-
-            adc_evts = []
-            for raw_str in df[col_name].dropna():
-                if raw_str and len(raw_str) == 32:
-                    adc_evts.append(int(raw_str[12:22], 2))
-            
-            if adc_evts:
-                adc_events_per_channel.append(adc_evts)
-                active_channels_map.append(1)
+                    adcs.append(int(raw_str[12:22], 2))
+                    adcms.append(int(raw_str[2:12], 2))
+                    toas.append(int(raw_str[22:], 2))
+                else:
+                    adcs.append(0); adcms.append(0); toas.append(0)
+            # Otherwise, calculate the average across all events
             else:
-                active_channels_map.append(0)
+                adc_evts, adcm_evts, toa_evts = [], [], []
+                for raw_str in df[col_name].dropna():
+                    if raw_str and len(raw_str) == 32:
+                        adcm_evts.append(int(raw_str[2:12], 2))
+                        adc_evts.append(int(raw_str[12:22], 2))
+                        toa_evts.append(int(raw_str[22:], 2))
+                
+                adcs.append(np.mean(adc_evts) if adc_evts else 0)
+                adcms.append(np.mean(adcm_evts) if adcm_evts else 0)
+                toas.append(np.mean(toa_evts) if toa_evts else 0)
+                noises.append(np.std(adc_evts) if adc_evts else 0)
 
-    adc_event_array = np.array(adc_events_per_channel).T if adc_events_per_channel else np.array([])
-    adcs, adcms, toas, noises = retrieve_ADCs(df, active_erx, channels)
-    
-    return adc_event_array, adcs, adcms, toas, noises
+    if event_num is None:
+        print(f"Processed average of {num_events_in_df} events")
+    else:
+        print(f"Processed single event #{event_num}")
+        noises = [0] * len(adcs) # Noise is not well-defined for a single event
+
+    return adcs, adcms, toas, noises
 
 def retrieve_CMs(df, active_erx, channels):
     CM0s, CM1s, avg0, avg1, CM0_rms, CM1_rms = [], [], [], [], [], []
@@ -341,7 +334,7 @@ def retrieve_CMs(df, active_erx, channels):
 # PART 4: PLOTTING & ANALYSIS FUNCTIONS
 #==============================================================================
 
-def Plot_ADCs(data_dict, erxs, channels, runID):
+def Plot_ADCs(data_dict, erxs, channels, runID, event_num=None):
     plt.style.use(hep.style.CMS)
     fig, axs = plt.subplots(2, 2, figsize=(20, 15), constrained_layout=True)
     fig.suptitle("ADC Plots for All Modules", fontsize=20)
@@ -363,7 +356,7 @@ def Plot_ADCs(data_dict, erxs, channels, runID):
             print(f"Skipping Module {key} due to empty dataframe.")
             continue
             
-        adc, adcm, _, noise = retrieve_ADCs(df, erxs, channels)
+        adc, adcm, _, noise = retrieve_ADCs(df, erxs, channels, event_num=event_num)
         _, _, CM0_erx, CM1_erx, CM0_rms, CM1_rms = retrieve_CMs(df, erxs, channels)
         
         # ADC Plot
@@ -414,7 +407,7 @@ def Plot_ADCs(data_dict, erxs, channels, runID):
     fig3.savefig(os.path.join(output_dir, "noise.pdf"))
     plt.show()
 
-def Plot_Single_Link_ADC(data_dict, link_to_plot, erxs, channels, runID):
+def Plot_Single_Link_ADC(data_dict, link_to_plot, erxs, channels, runID, event_num=None):
     """
     Generates and saves a single plot for a specified link,
     showing ADC values across all its channels.
@@ -439,12 +432,19 @@ def Plot_Single_Link_ADC(data_dict, link_to_plot, erxs, channels, runID):
     plt.style.use(hep.style.CMS)
     fig, ax = plt.subplots(figsize=(15, 8))
     
-    adc, _, _, _ = retrieve_ADCs(df, erxs, channels)
+    adc, _, _, _ = retrieve_ADCs(df, erxs, channels, event_num=event_num)
     
+    plot_title = f"ADC Distribution for {link_to_plot.capitalize()} (Module {module_key})"
+    y_label = "ADC Value"
+    if event_num is None:
+        y_label = "Average " + y_label
+    else:
+        plot_title += f" - Event {event_num}"
+
     ax.plot(adc, marker='o', linestyle='-')
-    ax.set_title(f"ADC Distribution for {link_to_plot.capitalize()} (Module {module_key})", fontsize=16)
+    ax.set_title(plot_title, fontsize=16)
     ax.set_xlabel("Channel Index")
-    ax.set_ylabel("Average ADC Value")
+    ax.set_ylabel(y_label)
     ax.grid(True, which='both', linestyle='--', linewidth=0.5)
     
     # Add vertical lines to separate eRx blocks
@@ -469,17 +469,19 @@ if __name__ == "__main__":
     parser.add_argument("run_id", type=str, help="The name of the folder containing the .txt or .csv data files. This will also be used for output directories.")
     parser.add_argument("--marker_link", type=str, default="link6", help="The link column to check for the start-of-packet marker (e.g., 'link0', 'link6'). Defaults to 'link6'.")
     parser.add_argument("--plot_link", type=str, help="Generate a single plot for a specified link (e.g., 'link4', 'link5', 'link6').")
+    parser.add_argument("--event", type=int, help="Plot a specific event number instead of the average. Starts at 0.")
     args = parser.parse_args()
     
     # Use the parsed arguments instead of hardcoded values
     RUN_ID = args.run_id
     MARKER_LINK = args.marker_link
     PLOT_LINK = args.plot_link
+    EVENT_NUM = args.event
     
     # --- Configuration ---
     # Define active links, eRxs, and channels based on your notebook
     LINKS = [0, 1, 2, 3, 4, 5]
-    ERXS = ["00", "01", "02", "03", "04"]
+    ERXS = ["00", "01", "02"]
     CHANNELS = [f"{j}{i}" for j in range(4) for i in range(10) if f"{j}{i}" != "18"]
     CHANNELS.append("36") # The loop logic in the notebook is a bit complex, this simplifies to get the same list
     
@@ -528,11 +530,11 @@ if __name__ == "__main__":
     # --- Step 2: Generate and Save Plots ---
     if PLOT_LINK:
         print(f"Generating single plot for {PLOT_LINK}...")
-        Plot_Single_Link_ADC(data_all_modules, PLOT_LINK, ERXS, CHANNELS, RUN_ID)
+        Plot_Single_Link_ADC(data_all_modules, PLOT_LINK, ERXS, CHANNELS, RUN_ID, event_num=EVENT_NUM)
     else:
         if any(not df.empty for df in data_all_modules.values()):
             print("Generating plots for all modules...")
-            Plot_ADCs(data_all_modules, ERXS, CHANNELS, RUN_ID)
+            Plot_ADCs(data_all_modules, ERXS, CHANNELS, RUN_ID, event_num=EVENT_NUM)
         else:
             print("All dataframes are empty after unpacking. No plots will be generated.")
 
