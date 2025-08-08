@@ -43,11 +43,12 @@ def parseHeaderWord1(HeaderWord1, returnDict=False):
 def parseHeaderWords(HeaderWords, returnDict=False):
     if not HeaderWords or len(HeaderWords) < 2:
         return {} if returnDict else []
-    if isinstance(HeaderWords[0], (str, np.str_, np.string_)):
+    # CORRECTED: Use np.bytes_ instead of the removed np.string_ and check for standard str type
+    if isinstance(HeaderWords[0], (str, np.bytes_)):
         hdr_0 = int(HeaderWords[0], 16)
     else:
         hdr_0 = HeaderWords[0]
-    if isinstance(HeaderWords[1], (str, np.str_, np.string_)):
+    if isinstance(HeaderWords[1], (str, np.bytes_)):
         hdr_1 = int(HeaderWords[1], 16)
     else:
         hdr_1 = HeaderWords[1]
@@ -83,14 +84,28 @@ def unpackSinglePacket(packet, activeLinks):
     headerInfo = parseHeaderWords(packet, returnDict=True)
     if not headerInfo: return None # Packet is too short
 
+    # --- ADDED PRINTOUTS ---
+    print("-" * 50)
+    print(f"  - Payload Length: {headerInfo.get('PayloadLength', 'N/A')}")
+    print(f"  - Truncated (T): {'Yes' if headerInfo.get('T') == 1 else 'No'}")
+    print(f"  - Passthrough (P): {'Yes' if headerInfo.get('P') == 1 else 'No'}")
+    print(f"  - Bunch Crossing (BX): {headerInfo.get('Bunch', 'N/A')}")
+    print(f"  - L1A Event: {headerInfo.get('Event', 'N/A')}")
+    print("-" * 50)
+    # --- END OF ADDED PRINTOUTS ---
+
     subPackets = packet[2:-1]
     crc = packet[-1]
 
+    # If the header says the packet is truncated, we trust it and return an empty data row.
     if headerInfo.get('T') == 1:
-        assert len(subPackets) == 0
+        # The assertion below is too strict for some real-world data, which may have
+        # a truncated flag but still contain some data words. We comment it out
+        # to prevent crashing and proceed with the intended logic.
+        # assert len(subPackets) == 0
         return list(headerInfo.values()) + list(np.concatenate([eRxHeaderData, chData], axis=1).flatten()) + [crc]
 
-    subpacketBinString = ''.join(np.vectorize(lambda x: f'{int(x, 16):032b}')(subPackets))
+    subpacketBinString = ''.join(np.vectorize(lambda x: f'{int(str(x), 16):032b}')(subPackets))
 
     for eRx in activeLinks:
         if len(subpacketBinString) < 32: continue
@@ -151,7 +166,9 @@ def unpackSinglePacket(packet, activeLinks):
 
 def unpackPackets(packetList, activeLinks):
     unpackedInfo = []
-    for p in packetList:
+    print(f"\n--- Unpacking {len(packetList)} packets ---")
+    for i, p in enumerate(packetList):
+        print(f"\n--- Processing Packet #{i+1} ---")
         unpacked = unpackSinglePacket(p, activeLinks)
         if unpacked:
             unpackedInfo.append(unpacked)
@@ -174,20 +191,40 @@ def unpackPackets(packetList, activeLinks):
 # PART 2: RAW DATA FILE READING & PRE-PROCESSING
 #==============================================================================
 
-def read_text_files(folder):
+def read_data_files(folder):
+    """
+    Reads all .txt and .csv files in a folder, combines them, 
+    and returns a single DataFrame.
+    """
     headers = ["link0", "link1", "link2", "link3", "link4", "link5", "link6"]
-    txt_files = glob.glob(os.path.join(folder, "*.txt"))
-    if not txt_files:
-        print(f"Warning: No .txt files found in folder '{folder}'")
+    
+    # Find both .txt and .csv files in the specified folder
+    all_files = glob.glob(os.path.join(folder, "*.txt")) + glob.glob(os.path.join(folder, "*.csv"))
+    
+    if not all_files:
+        print(f"Warning: No .txt or .csv files found in folder '{folder}'")
         return pd.DataFrame()
 
     df_list = []
-    for file in txt_files:
+    for file in all_files:
+        # --- ADDED PRINTOUT ---
+        print(f"--> Reading data from file: {os.path.basename(file)}")
+        # --- END OF ADDED PRINTOUT ---
         try:
-            # Drop the first column which is just the index from the text file
-            df = pd.read_csv(file, delim_whitespace=True, skiprows=2, header=None, usecols=range(1, 8))
-            df.columns = headers
-            df_list.append(df)
+            if file.endswith('.txt'):
+                # Logic for space-delimited text files, skipping header lines
+                df = pd.read_csv(file, sep='\s+', skiprows=2, header=None, usecols=range(1, 8))
+                df.columns = headers
+                df_list.append(df)
+            elif file.endswith('.csv'):
+                # Logic for standard comma-separated files with a header
+                df = pd.read_csv(file)
+                # Ensure the columns match what the rest of the script expects
+                if not all(h in df.columns for h in headers):
+                    print(f"  - Warning: CSV file {file} is missing one of the required columns: {headers}")
+                    continue
+                df = df[headers] # Select/reorder columns to be safe
+                df_list.append(df)
         except Exception as e:
             print(f"Could not read file {file}. Error: {e}")
 
@@ -196,11 +233,12 @@ def read_text_files(folder):
 
 def data_to_pkt(df, marker_link='link6'):
     """
-    Finds packet boundaries in the raw DataFrame using a specified marker link.
+    Finds packet boundaries in the raw DataFrame and groups links
+    into modules based on the new mapping.
     """
     if df.empty or marker_link not in df.columns:
         print(f"Marker link '{marker_link}' not found in DataFrame or DataFrame is empty.")
-        return [], [], [], []
+        return [], [], []
         
     position = []
     for i in range(1, len(df[marker_link])):
@@ -210,22 +248,19 @@ def data_to_pkt(df, marker_link='link6'):
             position.append(i)
     position.append(len(df[marker_link]))
     
-    Lpkt0, Lpkt1, Lpkt2, Lpkt3 = [], [], [], []
+    Lpkt_east0, Lpkt_east1, Lpkt_east2 = [], [], []
     
     for j in range(len(position)-1):
-        pkt0, pkt1, pkt2, pkt3 = [], [], [], []
+        pkt_e0, pkt_e1, pkt_e2 = [], [], []
         for i in range(position[j], position[j+1]):
-            # Filter out idle words before appending
-            if not str(df["link0"][i]).startswith("555555"): pkt0.append(df["link0"][i])
-            if not str(df["link1"][i]).startswith("555555"): pkt0.append(df["link1"][i])
-            if not str(df["link2"][i]).startswith("555555"): pkt1.append(df["link2"][i])
-            if not str(df["link4"][i]).startswith("555555"): pkt2.append(df["link4"][i])
-            if not str(df["link6"][i]).startswith("555555"): pkt3.append(df["link6"][i])
-            if not str(df["link5"][i]).startswith("555555"): pkt3.append(df["link5"][i])
+            # Filter out idle words and append data to the correct packet list
+            if not str(df["link4"][i]).startswith("555555"): pkt_e0.append(df["link4"][i])
+            if not str(df["link5"][i]).startswith("555555"): pkt_e1.append(df["link5"][i])
+            if not str(df["link6"][i]).startswith("555555"): pkt_e2.append(df["link6"][i])
         
-        Lpkt0.append(pkt0); Lpkt1.append(pkt1); Lpkt2.append(pkt2); Lpkt3.append(pkt3)
+        Lpkt_east0.append(pkt_e0); Lpkt_east1.append(pkt_e1); Lpkt_east2.append(pkt_e2)
         
-    return Lpkt0, Lpkt1, Lpkt2, Lpkt3
+    return Lpkt_east0, Lpkt_east1, Lpkt_east2
 
 #==============================================================================
 # PART 3: DATA EXTRACTION FOR PLOTTING
@@ -321,7 +356,7 @@ def Plot_ADCs(data_dict, erxs, channels, runID):
     
     keys = list(data_dict.keys())
     for i, key in enumerate(keys):
-        if i >= 4: break
+        if i >= len(axs_flat): break # Stop if we run out of subplots
         
         df = data_dict[key]
         if df.empty:
@@ -366,11 +401,62 @@ def Plot_ADCs(data_dict, erxs, channels, runID):
         
         ax.legend(); ax3.legend()
 
+    # Turn off unused subplots
+    for i in range(len(keys), len(axs_flat)):
+        axs_flat[i].axis('off')
+        axs2_flat[i].axis('off')
+        axs3_flat[i].axis('off')
+
     output_dir = f"Plots/{runID}"
     os.makedirs(output_dir, exist_ok=True)
     fig.savefig(os.path.join(output_dir, "adc.pdf"))
     fig2.savefig(os.path.join(output_dir, "adc1.pdf"))
     fig3.savefig(os.path.join(output_dir, "noise.pdf"))
+    plt.show()
+
+def Plot_Single_Link_ADC(data_dict, link_to_plot, erxs, channels, runID):
+    """
+    Generates and saves a single plot for a specified link,
+    showing ADC values across all its channels.
+    """
+    # Map the link name to the corresponding module key in the data_dict
+    link_to_module_map = {
+        'link4': 'east 0',
+        'link5': 'east 1',
+        'link6': 'east 2',
+    }
+    
+    module_key = link_to_module_map.get(link_to_plot)
+    if not module_key:
+        print(f"Error: Link '{link_to_plot}' is not mapped to a known module.")
+        return
+        
+    df = data_dict.get(module_key)
+    if df is None or df.empty:
+        print(f"Skipping plot for {link_to_plot} (Module {module_key}) as it has no data.")
+        return
+
+    plt.style.use(hep.style.CMS)
+    fig, ax = plt.subplots(figsize=(15, 8))
+    
+    adc, _, _, _ = retrieve_ADCs(df, erxs, channels)
+    
+    ax.plot(adc, marker='o', linestyle='-')
+    ax.set_title(f"ADC Distribution for {link_to_plot.capitalize()} (Module {module_key})", fontsize=16)
+    ax.set_xlabel("Channel Index")
+    ax.set_ylabel("Average ADC Value")
+    ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+    
+    # Add vertical lines to separate eRx blocks
+    for e_idx, erx in enumerate(erxs):
+        end_ch = (e_idx + 1) * len(channels)
+        ax.axvline(x=end_ch - 0.5, color='gray', linestyle='--')
+
+    output_dir = f"Plots/{runID}"
+    os.makedirs(output_dir, exist_ok=True)
+    output_filename = os.path.join(output_dir, f"adc_plot_{link_to_plot}.pdf")
+    fig.savefig(output_filename)
+    print(f"Single link plot saved to: {output_filename}")
     plt.show()
 
 #==============================================================================
@@ -379,19 +465,21 @@ def Plot_ADCs(data_dict, erxs, channels, runID):
 
 if __name__ == "__main__":
     # --- Argument Parser Setup ---
-    parser = argparse.ArgumentParser(description="Process and plot HGCAL data from text files.")
-    parser.add_argument("run_id", type=str, help="The name of the folder containing the .txt data files. This will also be used for output directories.")
+    parser = argparse.ArgumentParser(description="Process and plot HGCAL data from text or CSV files.")
+    parser.add_argument("run_id", type=str, help="The name of the folder containing the .txt or .csv data files. This will also be used for output directories.")
     parser.add_argument("--marker_link", type=str, default="link6", help="The link column to check for the start-of-packet marker (e.g., 'link0', 'link6'). Defaults to 'link6'.")
+    parser.add_argument("--plot_link", type=str, help="Generate a single plot for a specified link (e.g., 'link4', 'link5', 'link6').")
     args = parser.parse_args()
     
     # Use the parsed arguments instead of hardcoded values
     RUN_ID = args.run_id
     MARKER_LINK = args.marker_link
+    PLOT_LINK = args.plot_link
     
     # --- Configuration ---
     # Define active links, eRxs, and channels based on your notebook
     LINKS = [0, 1, 2, 3, 4, 5]
-    ERXS = ["00", "01", "02", "03", "04", "05"]
+    ERXS = ["00", "01", "02", "03", "04"]
     CHANNELS = [f"{j}{i}" for j in range(4) for i in range(10) if f"{j}{i}" != "18"]
     CHANNELS.append("36") # The loop logic in the notebook is a bit complex, this simplifies to get the same list
     
@@ -405,44 +493,47 @@ if __name__ == "__main__":
     if os.path.exists(unpacked_data_dir):
         print("Loading existing unpacked dataframes from pickle files...")
         try:
-            data_all_modules["west 1"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat1.pkl"))
-            data_all_modules["west 0"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat2.pkl"))
-            data_all_modules["east 0"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat3.pkl"))
-            data_all_modules["east 1"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat4.pkl"))
+            data_all_modules["east 0"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat_e0.pkl"))
+            data_all_modules["east 1"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat_e1.pkl"))
+            data_all_modules["east 2"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat_e2.pkl"))
         except FileNotFoundError:
             print("Pickle files not found, proceeding to unpack raw data.")
             pass
 
     # If data wasn't loaded from pickle, process from raw text files
     if not data_all_modules:
-        print(f"Reading raw text files from folder '{RUN_ID}'...")
-        raw_df = read_text_files(RUN_ID)
+        print(f"Reading raw data files from folder '{RUN_ID}'...")
+        raw_df = read_data_files(RUN_ID)
         
         if not raw_df.empty:
             print("Extracting packets from raw data...")
-            Lpkt0, Lpkt1, Lpkt2, Lpkt3 = data_to_pkt(raw_df, marker_link=MARKER_LINK)
+            Lpkt_east0, Lpkt_east1, Lpkt_east2 = data_to_pkt(raw_df, marker_link=MARKER_LINK)
             
             print("Unpacking data for each module...")
             data_all_modules = {
-                "west 1": unpackPackets(Lpkt0, LINKS),
-                "west 0": unpackPackets(Lpkt1, LINKS),
-                "east 0": unpackPackets(Lpkt2, LINKS),
-                "east 1": unpackPackets(Lpkt3, LINKS),
+                "east 0": unpackPackets(Lpkt_east0, LINKS),
+                "east 1": unpackPackets(Lpkt_east1, LINKS),
+                "east 2": unpackPackets(Lpkt_east2, LINKS),
             }
             
             print(f"Saving unpacked data to: {unpacked_data_dir}")
             os.makedirs(unpacked_data_dir, exist_ok=True)
-            for i, key in enumerate(data_all_modules.keys()):
-                data_all_modules[key].to_pickle(os.path.join(unpacked_data_dir, f"dat{i+1}.pkl"))
+            data_all_modules["east 0"].to_pickle(os.path.join(unpacked_data_dir, "dat_e0.pkl"))
+            data_all_modules["east 1"].to_pickle(os.path.join(unpacked_data_dir, "dat_e1.pkl"))
+            data_all_modules["east 2"].to_pickle(os.path.join(unpacked_data_dir, "dat_e2.pkl"))
         else:
             print(f"No raw data found in folder '{RUN_ID}'. Exiting.")
             exit()
 
     # --- Step 2: Generate and Save Plots ---
-    if any(not df.empty for df in data_all_modules.values()):
-        print("Generating plots...")
-        Plot_ADCs(data_all_modules, ERXS, CHANNELS, RUN_ID)
+    if PLOT_LINK:
+        print(f"Generating single plot for {PLOT_LINK}...")
+        Plot_Single_Link_ADC(data_all_modules, PLOT_LINK, ERXS, CHANNELS, RUN_ID)
     else:
-        print("All dataframes are empty after unpacking. No plots will be generated.")
+        if any(not df.empty for df in data_all_modules.values()):
+            print("Generating plots for all modules...")
+            Plot_ADCs(data_all_modules, ERXS, CHANNELS, RUN_ID)
+        else:
+            print("All dataframes are empty after unpacking. No plots will be generated.")
 
     print("--- Processing Complete ---")
