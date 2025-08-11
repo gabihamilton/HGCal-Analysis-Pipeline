@@ -8,7 +8,7 @@ import json
 import argparse # Import the argparse library
 
 #==============================================================================
-# PART 1: PACKET DECODING (PARSING)
+# PACKET DECODING (PARSING)
 # Functions from ParseEtxOutputs.py and the first notebook cell.
 # These take a raw packet and decode it into a structured DataFrame.
 #==============================================================================
@@ -45,7 +45,7 @@ def parseHeaderWords(HeaderWords, returnDict=False):
         return {} if returnDict else []
     
     ### CHANGED: Updated for NumPy 2.0 compatibility.
-    # The original code used `np.string_`, which was removed. We now use `np.bytes_`.
+    # The original code used `np.string_`, which was removed
     # Also simplified the check to just `str` and `np.bytes_`.
     if isinstance(HeaderWords[0], (str, np.bytes_)):
         hdr_0 = int(HeaderWords[0], 16)
@@ -87,8 +87,7 @@ def unpackSinglePacket(packet, activeLinks):
     headerInfo = parseHeaderWords(packet, returnDict=True)
     if not headerInfo: return None
 
-    ### NEW: Added printouts for debugging and visibility.
-    # This was added to help understand the content of each packet header as it's processed.
+    ### NEW: added printouts
     print("-" * 50)
     print(f"  - Payload Length: {headerInfo.get('PayloadLength', 'N/A')}")
     print(f"  - Truncated (T): {'Yes' if headerInfo.get('T') == 1 else 'No'}")
@@ -103,7 +102,7 @@ def unpackSinglePacket(packet, activeLinks):
     if headerInfo.get('T') == 1:
         ### CHANGED: Relaxed a strict assertion.
         # The original `assert len(subPackets) == 0` would crash if a packet was marked
-        # as truncated but still contained data. We removed it to handle imperfect data gracefully.
+        # as truncated but still contained data
         return list(headerInfo.values()) + list(np.concatenate([eRxHeaderData, chData], axis=1).flatten()) + [crc]
 
     subpacketBinString = ''.join(np.vectorize(lambda x: f'{int(str(x), 16):032b}')(subPackets))
@@ -167,7 +166,7 @@ def unpackSinglePacket(packet, activeLinks):
 
 def unpackPackets(packetList, activeLinks):
     unpackedInfo = []
-    ### NEW: Added a counter for visibility into the unpacking process.
+    ### NEW: counter
     print(f"\n--- Unpacking {len(packetList)} packets ---")
     for i, p in enumerate(packetList):
         print(f"\n--- Processing Packet #{i+1} ---")
@@ -189,15 +188,14 @@ def unpackPackets(packetList, activeLinks):
     return pd.DataFrame(equalized_info, columns=columns)
 
 #==============================================================================
-# PART 2: RAW DATA FILE READING & PRE-PROCESSING
+# RAW DATA FILE READING & PRE-PROCESSING
 #==============================================================================
 
-### NEW: This function replaces the original `read_files`.
-# It's more robust and flexible than the original.
+### ADAPTED
 def read_data_files(folder):
     headers = ["link0", "link1", "link2", "link3", "link4", "link5", "link6"]
     
-    ### CHANGED: Now searches for both .txt and .csv files.
+    ### CHANGED: searches for both .txt and .csv files.
     all_files = glob.glob(os.path.join(folder, "*.txt")) + glob.glob(os.path.join(folder, "*.csv"))
     
     if not all_files:
@@ -206,10 +204,10 @@ def read_data_files(folder):
 
     df_list = []
     for file in all_files:
-        ### NEW: Added a printout to show which file is being read.
+        ### NEW: which file is being read.
         print(f"--> Reading data from file: {os.path.basename(file)}")
         try:
-            ### NEW: Added conditional logic to handle different file types.
+            ### NEW: handle different file types.
             if file.endswith('.txt'):
                 df = pd.read_csv(file, sep='\s+', skiprows=2, header=None, usecols=range(1, 8))
                 df.columns = headers
@@ -227,14 +225,14 @@ def read_data_files(folder):
     if not df_list: return pd.DataFrame()
     return pd.concat(df_list, ignore_index=True)
 
-### CHANGED: This function was significantly modified from the original notebook.
+### CHANGED:
 def data_to_pkt(df, marker_link='link6'):
     if df.empty or marker_link not in df.columns:
         print(f"Marker link '{marker_link}' not found in DataFrame or DataFrame is empty.")
         return [], [], []
         
     position = []
-    ### CHANGED: Now uses the `marker_link` argument instead of hardcoding 'link0'.
+    ### CHANGED: `marker_link` argument instead of hardcoding 'link0'.
     for i in range(1, len(df[marker_link])):
         prev_word = str(df[marker_link][i-1])
         curr_word = str(df[marker_link][i])
@@ -258,11 +256,10 @@ def data_to_pkt(df, marker_link='link6'):
     return Lpkt_east0, Lpkt_east1, Lpkt_east2
 
 #==============================================================================
-# PART 3: DATA EXTRACTION FOR PLOTTING
+# DATA EXTRACTION FOR PLOTTING
 #==============================================================================
 
-### NEW: This function was created to bridge the gap between the text-based
-# decoded DataFrame and the number-based plots.
+### NEW
 def retrieve_ADCs(df, active_erx, channels, event_num=None):
     adcs, adcms, toas, noises = [], [], [], []
     
@@ -278,7 +275,7 @@ def retrieve_ADCs(df, active_erx, channels, event_num=None):
                 adcs.append(0); adcms.append(0); toas.append(0); noises.append(0)
                 continue
             
-            ### NEW: Added logic to plot a single event if `event_num` is specified.
+            ### NEW: plot a single event if `event_num` is specified.
             if event_num is not None:
                 raw_str = df[col_name].iloc[event_num]
                 if raw_str and len(raw_str) == 32:
@@ -326,7 +323,7 @@ def retrieve_CMs(df, active_erx, channels):
     return CM0s, CM1s, avg0, avg1, CM0_rms, CM1_rms
 
 #==============================================================================
-# PART 4: PLOTTING & ANALYSIS FUNCTIONS
+# PLOTTING & ANALYSIS FUNCTIONS
 #==============================================================================
 
 def Plot_ADCs(data_dict, erxs, channels, runID, event_num=None):
@@ -389,7 +386,7 @@ def Plot_ADCs(data_dict, erxs, channels, runID, event_num=None):
     fig.savefig(os.path.join(output_dir, "adc.pdf")); fig2.savefig(os.path.join(output_dir, "adc1.pdf")); fig3.savefig(os.path.join(output_dir, "noise.pdf"))
     plt.show()
 
-### NEW: This entire function was added to provide single-link plotting functionality.
+### NEW
 def Plot_Single_Link_ADC(data_dict, link_to_plot, erxs, channels, runID, event_num=None):
     link_to_module_map = {'link4': 'east 0', 'link5': 'east 1', 'link6': 'east 2'}
     
@@ -432,13 +429,12 @@ def Plot_Single_Link_ADC(data_dict, link_to_plot, erxs, channels, runID, event_n
     plt.show()
 
 #==============================================================================
-# PART 5: MAIN EXECUTION BLOCK
+# MAIN EXECUTION BLOCK
 #==============================================================================
 
-### NEW: The entire main execution block was created for the script.
-# This makes the code runnable from the command line and adds configuration control.
+### NEW: execution block
 if __name__ == "__main__":
-    ### NEW: Added argparse to handle command-line arguments.
+    ### NEW: command-line arguments
     parser = argparse.ArgumentParser(description="Process and plot HGCAL data from text or CSV files.")
     parser.add_argument("run_id", type=str, help="The name of the folder containing the .txt or .csv data files.")
     parser.add_argument("--marker_link", type=str, default="link6", help="The link column to check for the start-of-packet marker.")
@@ -463,15 +459,15 @@ if __name__ == "__main__":
     data_all_modules = {}
 
     ### NEW: Added logic to load pre-processed data to save time.
-    if os.path.exists(unpacked_data_dir):
-        print("Loading existing unpacked dataframes from pickle files...")
-        try:
-            data_all_modules["east 0"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat_e0.pkl"))
-            data_all_modules["east 1"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat_e1.pkl"))
-            data_all_modules["east 2"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat_e2.pkl"))
-        except FileNotFoundError:
-            print("Pickle files not found, proceeding to unpack raw data.")
-            pass
+    #if os.path.exists(unpacked_data_dir):
+    #    print("Loading existing unpacked dataframes from pickle files...")
+    #    try:
+    #        data_all_modules["east 0"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat_e0.pkl"))
+    #        data_all_modules["east 1"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat_e1.pkl"))
+    #        data_all_modules["east 2"] = pd.read_pickle(os.path.join(unpacked_data_dir, "dat_e2.pkl"))
+    #    except FileNotFoundError:
+    #        print("Pickle files not found, proceeding to unpack raw data.")
+    #        pass
 
     if not data_all_modules:
         print(f"Reading raw data files from folder '{RUN_ID}'...")
@@ -482,7 +478,7 @@ if __name__ == "__main__":
             Lpkt_east0, Lpkt_east1, Lpkt_east2 = data_to_pkt(raw_df, marker_link=MARKER_LINK)
             
             print("Unpacking data for each module...")
-            ### CHANGED: Module mapping updated to match your specific hardware setup.
+            ### CHANGED: module mapping updated
             data_all_modules = {
                 "east 0": unpackPackets(Lpkt_east0, LINKS),
                 "east 1": unpackPackets(Lpkt_east1, LINKS),
@@ -498,7 +494,7 @@ if __name__ == "__main__":
             print(f"No raw data found in folder '{RUN_ID}'. Exiting.")
             exit()
 
-    ### NEW: Added logic to decide whether to generate a single plot or all plots.
+    ### NEW: generate a single plot or all plots.
     if PLOT_LINK:
         print(f"Generating single plot for {PLOT_LINK}...")
         Plot_Single_Link_ADC(data_all_modules, PLOT_LINK, ERXS, CHANNELS, RUN_ID, event_num=EVENT_NUM)

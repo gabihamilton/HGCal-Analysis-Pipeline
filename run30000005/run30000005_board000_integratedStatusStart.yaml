@@ -1,0 +1,182 @@
+TimeStamp: 1753979788
+DateTime: Thu Jul 31 11:36:28 2025
+Tcds2Emulator:
+  CounterL1AAll: 0
+  CounterL1APhysics: 0
+  CounterL1ACalibration: 0
+  CounterL1ARandom: 0
+  CounterL1ASoftware: 0
+  CounterL1ARegular: 0
+  CounterL1ASubtype0: 0
+  CounterL1ASubtype1: 0
+  CounterL1ASubtype2: 0
+  CounterL1ASubtype3: 0
+  CounterL1ASubtype4: 0
+  CounterL1ASubtype5: 0
+  CounterL1ASubtype6: 0
+  CounterL1ASubtype7: 0
+  CounterTTSRisingEdgeAll: 0
+  CounterTTSRisingEdgePayload: 0
+  CounterTTSRisingEdgeHgcroc: 0
+  CounterTTSRisingEdgeSoftware: 0
+  CounterTTSRisingEdgeExternal: 0
+  CounterTTSBxAll: 1478741
+  CounterTTSBxPayload: 1478741
+  CounterTTSBxHgcroc: 0
+Tcds2Encoder:
+  EventCounter: 0
+  OrbitCounter: 412
+  SlinkFifoMaxOccupancy: 2
+  SlinkFifoFullRisingEdgeCounter: 0
+  SlinkFifoWriteEnableCounter: 0
+  SlinkFifoReadEnableCounter: 0
+CommonReadout:
+  PacketStartCounter: 0
+  PacketEndCounter: 0
+  MainChannel:
+    EventBufferMaxOccupancy: 0
+  RxChannels:
+    52:
+      EventBufferMaxOccupancy: 0
+    53:
+      EventBufferMaxOccupancy: 0
+    54:
+      EventBufferMaxOccupancy: 0
+    55:
+      EventBufferMaxOccupancy: 0
+    84:
+      EventBufferMaxOccupancy: 0
+    85:
+      EventBufferMaxOccupancy: 0
+    86:
+      EventBufferMaxOccupancy: 0
+    87:
+      EventBufferMaxOccupancy: 0
+    88:
+      EventBufferMaxOccupancy: 0
+    89:
+      EventBufferMaxOccupancy: 0
+    90:
+      EventBufferMaxOccupancy: 0
+    91:
+      EventBufferMaxOccupancy: 0
+    104:
+      EventBufferMaxOccupancy: 0
+    105:
+      EventBufferMaxOccupancy: 0
+    106:
+      EventBufferMaxOccupancy: 0
+    107:
+      EventBufferMaxOccupancy: 0
+    108:
+      EventBufferMaxOccupancy: 0
+    109:
+      EventBufferMaxOccupancy: 0
+    110:
+      EventBufferMaxOccupancy: 0
+    111:
+      EventBufferMaxOccupancy: 0
+    112:
+      EventBufferMaxOccupancy: 0
+    113:
+      EventBufferMaxOccupancy: 0
+    114:
+      EventBufferMaxOccupancy: 0
+    115:
+      EventBufferMaxOccupancy: 0
+  TxChannels:
+    52:
+      EventBufferMaxOccupancy: 0
+    53:
+      EventBufferMaxOccupancy: 0
+    54:
+      EventBufferMaxOccupancy: 0
+    55:
+      EventBufferMaxOccupancy: 0
+    84:
+      EventBufferMaxOccupancy: 0
+    85:
+      EventBufferMaxOccupancy: 0
+    86:
+      EventBufferMaxOccupancy: 0
+    87:
+      EventBufferMaxOccupancy: 0
+    88:
+      EventBufferMaxOccupancy: 0
+    89:
+      EventBufferMaxOccupancy: 0
+    90:
+      EventBufferMaxOccupancy: 0
+    91:
+      EventBufferMaxOccupancy: 0
+    104:
+      EventBufferMaxOccupancy: 0
+    105:
+      EventBufferMaxOccupancy: 0
+    106:
+      EventBufferMaxOccupancy: 0
+    107:
+      EventBufferMaxOccupancy: 0
+    108:
+      EventBufferMaxOccupancy: 0
+    109:
+      EventBufferMaxOccupancy: 0
+    110:
+      EventBufferMaxOccupancy: 0
+    111:
+      EventBufferMaxOccupancy: 0
+    112:
+      EventBufferMaxOccupancy: 0
+    113:
+      EventBufferMaxOccupancy: 0
+    114:
+      EventBufferMaxOccupancy: 0
+    115:
+      EventBufferMaxOccupancy: 0
+SlinkLocal:
+  SlinkLocalQuads:
+    0:
+      SlinkLocalQuad:
+        SlinkLocalChannels:
+          0:
+            SlinkLocalChannel:
+              CounterStarts: 138
+              CounterStops: 137
+          1:
+            SlinkLocalChannel:
+              CounterStarts: 240
+              CounterStops: 240
+DaqTop:
+  Tcds2Encoder:
+    EventCounter: 0
+    OrbitCounter: 398
+    SlinkFifoMaxOccupancy: 2
+    SlinkFifoFullRisingEdgeCounter: 0
+    SlinkFifoWriteEnableCounter: 0
+    SlinkFifoReadEnableCounter: 0
+SlinkPacketBuilders:
+  0:
+    HeaderCounter: 1165
+    TrailerCounter: 1165
+DaqLpGbtPairs:
+  0:
+    CaptureBlock:
+      EventCounter: 0
+    Decoder:
+      Error???: false
+  1:
+    CaptureBlock:
+      EventCounter: 0
+      Econds:
+        - LatchedIdleError: false
+          NumberOfCrcErrors: 0
+    Decoder:
+      Error???: false
+  2:
+    CaptureBlock:
+      EventCounter: 0
+      Econds:
+        - LatchedIdleError: false
+          NumberOfCrcErrors: 0
+    Decoder:
+      Error???: false

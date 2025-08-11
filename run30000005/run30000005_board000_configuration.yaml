@@ -1,0 +1,1183 @@
+TimeStamp: 1753979788
+DateTime: Thu Jul 31 11:36:28 2025
+RunInfo:
+  BoardNumber: "901\x00"
+  RunNumber: 30000005
+Tcds2Emulator:
+  EnableL1APhysics: 0
+  EnableL1ARandom: 0
+  EnableL1ASoftware: 0
+  EnableL1ARegular: 1
+  L1APrbsThreshold: 0
+  L1ARegularGap: 356400
+  EnableNZSRegular: 1
+  EnableNZSRandom: 0
+  EnableNZSPhysics: 0
+  CalComingToL1A: 0
+  TTSEnable: 7
+  L1APhysicsEnable: 0
+  SequencerRunCtrl: 0
+  SequencerLength: 0
+  DisableAutoThrottle: 0
+  AutoThrottleCount: 1
+Tcds2Encoder:
+  SlinkFifoOffset: 0
+  EnableSlinkFifoThrottle: 1
+  L1aEcrEnable: 0
+  OcrEnable: 0
+  OcrPeriod: 8
+  PreL1aOffsetOverride3: 3
+  PreL1aOffsetOverride3Enable: 0
+  L1aStretch: 0
+  CalPulseIntDelay: 8
+  CalPulseExtDelay: 10
+CommonReadout:
+  DisableSlinkBackpressure: 0
+  MainChannel:
+    Latency: 11
+    TmuxId: 0
+    ReadoutWindow: 1
+    WordsPerBx: 8
+    Masked: 0
+  RxChannels:
+    52:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    53:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    54:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    55:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    84:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    85:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    86:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    87:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    88:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    89:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    90:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    91:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    104:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+    105:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+    106:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+    107:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+    108:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+    109:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+    110:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+    111:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+    112:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+    113:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+    114:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+    115:
+      Latency: 1001
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 4
+      Masked: 0
+  TxChannels:
+    52:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    53:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    54:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    55:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    84:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    85:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    86:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    87:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    88:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    89:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    90:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    91:
+      Latency: 0
+      TmuxId: 0
+      ReadoutWindow: 0
+      WordsPerBx: 0
+      Masked: 0
+    104:
+      Latency: 889
+      TmuxId: 4
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+    105:
+      Latency: 889
+      TmuxId: 5
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+    106:
+      Latency: 889
+      TmuxId: 6
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+    107:
+      Latency: 889
+      TmuxId: 7
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+    108:
+      Latency: 889
+      TmuxId: 8
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+    109:
+      Latency: 889
+      TmuxId: 9
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+    110:
+      Latency: 889
+      TmuxId: 10
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+    111:
+      Latency: 889
+      TmuxId: 11
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+    112:
+      Latency: 889
+      TmuxId: 12
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+    113:
+      Latency: 889
+      TmuxId: 13
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+    114:
+      Latency: 889
+      TmuxId: 14
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+    115:
+      Latency: 889
+      TmuxId: 15
+      ReadoutWindow: 0
+      WordsPerBx: 6
+      Masked: 0
+SlinkLocal:
+  SamplingModeEnable: false
+  LumiSectionPeriod: 100000
+  SlinkLocalQuads:
+    0:
+      SlinkLocalQuad:
+        SlinkLocalChannels:
+          0:
+            SlinkLocalChannel:
+              LocalEnable: true
+              PacketMode: DiskWrite
+              DumpEnable: false
+              PrintEnable: false
+              SocketPort: 10008
+              SourceId: 0x00000bb8
+          1:
+            SlinkLocalChannel:
+              LocalEnable: true
+              PacketMode: DiskWrite
+              DumpEnable: false
+              PrintEnable: false
+              SocketPort: 10009
+              SourceId: 0x00000bb9
+DataFramer:
+  DataFramerRx:
+    52:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    53:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    54:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    55:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    84:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    85:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    86:
+      - Address: 5
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 0
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    87:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    88:
+      - Address: 3
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 0
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    89:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    90:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    91:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    104:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    105:
+      - Address: 6
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+    106:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    107:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    108:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    109:
+      - Address: 1
+        Shift: 0
+      - Address: 0
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    110:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    111:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    112:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    113:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    114:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+    115:
+      - Address: 0
+        Shift: 0
+      - Address: 1
+        Shift: 0
+      - Address: 2
+        Shift: 0
+      - Address: 3
+        Shift: 0
+      - Address: 4
+        Shift: 0
+      - Address: 5
+        Shift: 0
+      - Address: 6
+        Shift: 0
+DaqTop:
+  Tcds2Encoder:
+    SlinkFifoOffset: 0
+    EnableSlinkFifoThrottle: 1
+    L1aEcrEnable: 0
+    OcrEnable: 0
+    OcrPeriod: 8
+    PreL1aOffsetOverride3: 3
+    PreL1aOffsetOverride3Enable: 0
+    L1aStretch: 0
+    CalPulseIntDelay: 8
+    CalPulseExtDelay: 10
+SlinkPacketBuilders:
+  0:
+    SlinkPacketBuilder:
+      CaptureBlockReadStart: 1
+      CaptureBlockReadEnd: 2
+GlobalCaptureBlock:
+  BcrResetValue: 4
+  OcrResetValue: 0
+  EcondIdlePattern: 0xccccff
+  TimeoutLimit: 4095
+DaqLpGbtPairs:
+  0:
+    CaptureBlock:
+      EcondHeaderPattern: 0x154
+      DisableBackpressure: 1
+      AllowBxMismatch: 1
+      NumberOfEconds: 0
+      EcondMemories:
+        - StartAddress: 0
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+      EcondIds: [15, 15, 15, 15, 15, 15, 15, 15, 0, 15, 0, 15, 15, 15]
+    FastControlBlock:
+      UserCommand: 0x36
+      UserCommandBx: 1
+      FastControlStreams:
+        0:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        1:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        2:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        3:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        4:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        5:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        6:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        7:
+          CalPulseType: 1
+          LinkResetCommand: 0
+    Decoder:
+      ForceLock: 0
+      PreL1aOffset: 2
+  1:
+    CaptureBlock:
+      EcondHeaderPattern: 0x154
+      DisableBackpressure: 0
+      AllowBxMismatch: 1
+      NumberOfEconds: 1
+      EcondMemories:
+        - StartAddress: 0
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+      EcondIds: [0, 15, 0, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+    FastControlBlock:
+      UserCommand: 0x36
+      UserCommandBx: 1
+      FastControlStreams:
+        0:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        1:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        2:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        3:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        4:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        5:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        6:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        7:
+          CalPulseType: 1
+          LinkResetCommand: 0
+    Decoder:
+      ForceLock: 0
+      PreL1aOffset: 2
+  2:
+    CaptureBlock:
+      EcondHeaderPattern: 0x154
+      DisableBackpressure: 0
+      AllowBxMismatch: 1
+      NumberOfEconds: 1
+      EcondMemories:
+        - StartAddress: 0
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+        - StartAddress: 16383
+          EndAddress: 16383
+      EcondIds: [0, 15, 0, 15, 0, 15, 0, 15, 0, 15, 15, 15, 15, 15]
+    FastControlBlock:
+      UserCommand: 0x36
+      UserCommandBx: 1
+      FastControlStreams:
+        0:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        1:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        2:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        3:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        4:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        5:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        6:
+          CalPulseType: 1
+          LinkResetCommand: 0
+        7:
+          CalPulseType: 1
+          LinkResetCommand: 0
+    Decoder:
+      ForceLock: 0
+      PreL1aOffset: 2
+Stage1Top:
+  SelfTriggerDelay: 6
+Stage1LpGbtPairs:
+  104:
+    LpGbtPair:
+      StreamMap: [3, 2, 4, 7, 6]
+      Unpackers:
+        0:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        1:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        2:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 2
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 0, 1, 15, 15, 15, 15, 15, 15, 15, 15]
+        3:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 4
+            FeLatency: 0
+            ElinkMap: [0, 1, 2, 3, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        4:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 3
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 0, 1, 2, 15, 15, 15, 15, 15]
+        5:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+      SelfTriggers: None
+      TcProcessors: None
+  106:
+    LpGbtPair:
+      StreamMap: [3, 2, 4, 7, 6]
+      Unpackers:
+        0:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        1:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        2:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 2
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 0, 1, 15, 15, 15, 15, 15, 15, 15, 15]
+        3:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 4
+            FeLatency: 0
+            ElinkMap: [0, 1, 2, 3, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        4:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 3
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 0, 1, 2, 15, 15, 15, 15, 15]
+        5:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+      SelfTriggers: None
+      TcProcessors: None
+  108:
+    LpGbtPair:
+      StreamMap: [3, 2, 4, 7, 6]
+      Unpackers:
+        0:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        1:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        2:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 2
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 0, 1, 15, 15, 15, 15, 15, 15, 15, 15]
+        3:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 4
+            FeLatency: 0
+            ElinkMap: [0, 1, 2, 3, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        4:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 3
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 0, 1, 2, 15, 15, 15, 15, 15]
+        5:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+      SelfTriggers: None
+      TcProcessors: None
+  110:
+    LpGbtPair:
+      StreamMap: [3, 2, 4, 7, 6]
+      Unpackers:
+        0:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        1:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        2:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 2
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 0, 1, 15, 15, 15, 15, 15, 15, 15, 15]
+        3:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 4
+            FeLatency: 0
+            ElinkMap: [0, 1, 2, 3, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        4:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 3
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 0, 1, 2, 15, 15, 15, 15, 15]
+        5:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+      SelfTriggers: None
+      TcProcessors: None
+  112:
+    LpGbtPair:
+      StreamMap: [3, 2, 4, 7, 6]
+      Unpackers:
+        0:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        1:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        2:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 2
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 0, 1, 15, 15, 15, 15, 15, 15, 15, 15]
+        3:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 4
+            FeLatency: 0
+            ElinkMap: [0, 1, 2, 3, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        4:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 3
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 0, 1, 2, 15, 15, 15, 15, 15]
+        5:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+      SelfTriggers: None
+      TcProcessors: None
+  114:
+    LpGbtPair:
+      StreamMap: [3, 2, 4, 7, 6]
+      Unpackers:
+        0:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        1:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        2:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 2
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 0, 1, 15, 15, 15, 15, 15, 15, 15, 15]
+        3:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 4
+            FeLatency: 0
+            ElinkMap: [0, 1, 2, 3, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+        4:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 3
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 0, 1, 2, 15, 15, 15, 15, 15]
+        5:
+          Unpacker:
+            OutputDelay: 0
+            NumberOfElinks: 0
+            FeLatency: 0
+            ElinkMap: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]
+      SelfTriggers: None
+      TcProcessors: None

@@ -1,0 +1,5 @@
+{
+   "data" : [ 9310, 10, 10, 10 ],
+   "definition" : "OrbitData/run30000005/defEoR.jsd",
+   "source" : "LocalReadout"
+}

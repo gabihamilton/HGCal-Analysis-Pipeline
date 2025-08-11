@@ -1,0 +1,182 @@
+TimeStamp: 1753979871
+DateTime: Thu Jul 31 11:37:51 2025
+Tcds2Emulator:
+  CounterL1AAll: 9310
+  CounterL1APhysics: 0
+  CounterL1ACalibration: 0
+  CounterL1ARandom: 0
+  CounterL1ASoftware: 0
+  CounterL1ARegular: 9310
+  CounterL1ASubtype0: 0
+  CounterL1ASubtype1: 0
+  CounterL1ASubtype2: 0
+  CounterL1ASubtype3: 0
+  CounterL1ASubtype4: 0
+  CounterL1ASubtype5: 0
+  CounterL1ASubtype6: 0
+  CounterL1ASubtype7: 0
+  CounterTTSRisingEdgeAll: 9311
+  CounterTTSRisingEdgePayload: 1
+  CounterTTSRisingEdgeHgcroc: 0
+  CounterTTSRisingEdgeSoftware: 1
+  CounterTTSRisingEdgeExternal: 1
+  CounterTTSBxAll: 226485703
+  CounterTTSBxPayload: 1843404
+  CounterTTSBxHgcroc: 0
+Tcds2Encoder:
+  EventCounter: 9310
+  OrbitCounter: 931129
+  SlinkFifoMaxOccupancy: 3
+  SlinkFifoFullRisingEdgeCounter: 0
+  SlinkFifoWriteEnableCounter: 9310
+  SlinkFifoReadEnableCounter: 9310
+CommonReadout:
+  PacketStartCounter: 9310
+  PacketEndCounter: 9310
+  MainChannel:
+    EventBufferMaxOccupancy: 25
+  RxChannels:
+    52:
+      EventBufferMaxOccupancy: 1
+    53:
+      EventBufferMaxOccupancy: 1
+    54:
+      EventBufferMaxOccupancy: 1
+    55:
+      EventBufferMaxOccupancy: 1
+    84:
+      EventBufferMaxOccupancy: 1
+    85:
+      EventBufferMaxOccupancy: 1
+    86:
+      EventBufferMaxOccupancy: 1
+    87:
+      EventBufferMaxOccupancy: 1
+    88:
+      EventBufferMaxOccupancy: 1
+    89:
+      EventBufferMaxOccupancy: 1
+    90:
+      EventBufferMaxOccupancy: 1
+    91:
+      EventBufferMaxOccupancy: 1
+    104:
+      EventBufferMaxOccupancy: 5
+    105:
+      EventBufferMaxOccupancy: 5
+    106:
+      EventBufferMaxOccupancy: 5
+    107:
+      EventBufferMaxOccupancy: 5
+    108:
+      EventBufferMaxOccupancy: 5
+    109:
+      EventBufferMaxOccupancy: 5
+    110:
+      EventBufferMaxOccupancy: 5
+    111:
+      EventBufferMaxOccupancy: 5
+    112:
+      EventBufferMaxOccupancy: 5
+    113:
+      EventBufferMaxOccupancy: 5
+    114:
+      EventBufferMaxOccupancy: 5
+    115:
+      EventBufferMaxOccupancy: 5
+  TxChannels:
+    52:
+      EventBufferMaxOccupancy: 1
+    53:
+      EventBufferMaxOccupancy: 1
+    54:
+      EventBufferMaxOccupancy: 1
+    55:
+      EventBufferMaxOccupancy: 1
+    84:
+      EventBufferMaxOccupancy: 1
+    85:
+      EventBufferMaxOccupancy: 1
+    86:
+      EventBufferMaxOccupancy: 1
+    87:
+      EventBufferMaxOccupancy: 1
+    88:
+      EventBufferMaxOccupancy: 1
+    89:
+      EventBufferMaxOccupancy: 1
+    90:
+      EventBufferMaxOccupancy: 1
+    91:
+      EventBufferMaxOccupancy: 1
+    104:
+      EventBufferMaxOccupancy: 109
+    105:
+      EventBufferMaxOccupancy: 109
+    106:
+      EventBufferMaxOccupancy: 109
+    107:
+      EventBufferMaxOccupancy: 109
+    108:
+      EventBufferMaxOccupancy: 109
+    109:
+      EventBufferMaxOccupancy: 109
+    110:
+      EventBufferMaxOccupancy: 109
+    111:
+      EventBufferMaxOccupancy: 109
+    112:
+      EventBufferMaxOccupancy: 109
+    113:
+      EventBufferMaxOccupancy: 109
+    114:
+      EventBufferMaxOccupancy: 109
+    115:
+      EventBufferMaxOccupancy: 109
+SlinkLocal:
+  SlinkLocalQuads:
+    0:
+      SlinkLocalQuad:
+        SlinkLocalChannels:
+          0:
+            SlinkLocalChannel:
+              CounterStarts: 232
+              CounterStops: 231
+          1:
+            SlinkLocalChannel:
+              CounterStarts: 78
+              CounterStops: 78
+DaqTop:
+  Tcds2Encoder:
+    EventCounter: 9310
+    OrbitCounter: 931173
+    SlinkFifoMaxOccupancy: 3
+    SlinkFifoFullRisingEdgeCounter: 0
+    SlinkFifoWriteEnableCounter: 9310
+    SlinkFifoReadEnableCounter: 9310
+SlinkPacketBuilders:
+  0:
+    HeaderCounter: 9310
+    TrailerCounter: 9310
+DaqLpGbtPairs:
+  0:
+    CaptureBlock:
+      EventCounter: 513
+    Decoder:
+      Error???: false
+  1:
+    CaptureBlock:
+      EventCounter: 9310
+      Econds:
+        - LatchedIdleError: false
+          NumberOfCrcErrors: 0
+    Decoder:
+      Error???: false
+  2:
+    CaptureBlock:
+      EventCounter: 9310
+      Econds:
+        - LatchedIdleError: false
+          NumberOfCrcErrors: 0
+    Decoder:
+      Error???: false

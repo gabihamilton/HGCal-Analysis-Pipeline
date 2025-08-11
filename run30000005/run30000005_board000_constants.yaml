@@ -1,0 +1,316 @@
+TimeStamp: 1753979788
+DateTime: Thu Jul 31 11:36:28 2025
+CommonReadout:
+  RxRegionEnableBits: 0x1c602000
+  TxRegionEnableBits: 0x1c602000
+  RxRegularReadoutEnable: 0
+  TxRegularReadoutEnable: 0
+  RxWordConcatEnable: 1
+  TxWordConcatEnable: 0
+  RxTmuxPeriod: 1
+  TxTmuxPeriod: 18
+  RxMetadataValidEnable: 1
+  TxMetadataValidEnable: 1
+SlinkInterface:
+  NumberOfQuads: 0
+SlinkLocal:
+  EnabledQuads: 1
+  SlinkLocalQuads:
+    0:
+      SlinkLocalQuad:
+        EnabledChannels: 3
+Regions:
+  NumberOfRegions: 30
+  RegionInfo:
+    13:
+      MGTKind: GTY
+      MGTProtocolRx: LpGBT
+      MGTProtocolTx: LpGBT
+      BufferRx: Buffer
+      BufferTx: Buffer
+      Formatter: NoFormatter
+      CommonReadoutRx: true
+      CommonReadoutTx: true
+      Slink: false
+    21:
+      MGTKind: GTY
+      MGTProtocolRx: LpGBT
+      MGTProtocolTx: LpGBT
+      BufferRx: Buffer
+      BufferTx: Buffer
+      Formatter: NoFormatter
+      CommonReadoutRx: true
+      CommonReadoutTx: true
+      Slink: false
+    22:
+      MGTKind: GTY
+      MGTProtocolRx: LpGBT
+      MGTProtocolTx: LpGBT
+      BufferRx: Buffer
+      BufferTx: Buffer
+      Formatter: NoFormatter
+      CommonReadoutRx: true
+      CommonReadoutTx: true
+      Slink: false
+    24:
+      MGTKind: NoMGT
+      MGTProtocolRx: NoProtocol
+      MGTProtocolTx: NoProtocol
+      BufferRx: Buffer
+      BufferTx: Buffer
+      Formatter: NoFormatter
+      CommonReadoutRx: false
+      CommonReadoutTx: false
+      Slink: false
+    25:
+      MGTKind: NoMGT
+      MGTProtocolRx: NoProtocol
+      MGTProtocolTx: NoProtocol
+      BufferRx: Buffer
+      BufferTx: Buffer
+      Formatter: NoFormatter
+      CommonReadoutRx: false
+      CommonReadoutTx: false
+      Slink: false
+    26:
+      MGTKind: GTY
+      MGTProtocolRx: LpGBT
+      MGTProtocolTx: CSP16G
+      BufferRx: Buffer
+      BufferTx: Buffer
+      Formatter: NoFormatter
+      CommonReadoutRx: true
+      CommonReadoutTx: true
+      Slink: false
+    27:
+      MGTKind: GTY
+      MGTProtocolRx: LpGBT
+      MGTProtocolTx: CSP16G
+      BufferRx: Buffer
+      BufferTx: Buffer
+      Formatter: NoFormatter
+      CommonReadoutRx: true
+      CommonReadoutTx: true
+      Slink: false
+    28:
+      MGTKind: GTY
+      MGTProtocolRx: LpGBT
+      MGTProtocolTx: CSP16G
+      BufferRx: Buffer
+      BufferTx: Buffer
+      Formatter: NoFormatter
+      CommonReadoutRx: true
+      CommonReadoutTx: true
+      Slink: false
+DaqTop:
+  Version: 2
+  NumberOfSlinks: 1
+  NumberOfLpGbtPairs: 3
+Stage1Top:
+  Version: 1
+  NumberOfLpGbtPairs: 6
+Stage1LpGbtPairs:
+  104:
+    LpGbtPair:
+      NumberOfTotalUnpackers: 6
+      NumberOfActiveUnpackers: 5
+      Region: 26
+      RegionPair: 0
+      TotalPair: 0
+      Unpackers:
+        0:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 3
+        1:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 2
+        2:
+          Unpacker:
+            Type: 1
+            NumberOfElinksBc: 4
+        3:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        4:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        5:
+          Unpacker:
+            Type: 4
+            NumberOfElinksBc: 2
+      SelfTriggers: None
+      TcProcessors: None
+  106:
+    LpGbtPair:
+      NumberOfTotalUnpackers: 6
+      NumberOfActiveUnpackers: 5
+      Region: 26
+      RegionPair: 1
+      TotalPair: 1
+      Unpackers:
+        0:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 3
+        1:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 2
+        2:
+          Unpacker:
+            Type: 1
+            NumberOfElinksBc: 4
+        3:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        4:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        5:
+          Unpacker:
+            Type: 4
+            NumberOfElinksBc: 2
+      SelfTriggers: None
+      TcProcessors: None
+  108:
+    LpGbtPair:
+      NumberOfTotalUnpackers: 6
+      NumberOfActiveUnpackers: 5
+      Region: 27
+      RegionPair: 0
+      TotalPair: 2
+      Unpackers:
+        0:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 3
+        1:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 2
+        2:
+          Unpacker:
+            Type: 1
+            NumberOfElinksBc: 4
+        3:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        4:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        5:
+          Unpacker:
+            Type: 4
+            NumberOfElinksBc: 2
+      SelfTriggers: None
+      TcProcessors: None
+  110:
+    LpGbtPair:
+      NumberOfTotalUnpackers: 6
+      NumberOfActiveUnpackers: 5
+      Region: 27
+      RegionPair: 1
+      TotalPair: 3
+      Unpackers:
+        0:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 3
+        1:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 2
+        2:
+          Unpacker:
+            Type: 1
+            NumberOfElinksBc: 4
+        3:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        4:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        5:
+          Unpacker:
+            Type: 4
+            NumberOfElinksBc: 2
+      SelfTriggers: None
+      TcProcessors: None
+  112:
+    LpGbtPair:
+      NumberOfTotalUnpackers: 6
+      NumberOfActiveUnpackers: 5
+      Region: 28
+      RegionPair: 0
+      TotalPair: 4
+      Unpackers:
+        0:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 3
+        1:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 2
+        2:
+          Unpacker:
+            Type: 1
+            NumberOfElinksBc: 4
+        3:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        4:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        5:
+          Unpacker:
+            Type: 4
+            NumberOfElinksBc: 2
+      SelfTriggers: None
+      TcProcessors: None
+  114:
+    LpGbtPair:
+      NumberOfTotalUnpackers: 6
+      NumberOfActiveUnpackers: 5
+      Region: 28
+      RegionPair: 1
+      TotalPair: 5
+      Unpackers:
+        0:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 3
+        1:
+          Unpacker:
+            Type: 0
+            NumberOfElinksBc: 2
+        2:
+          Unpacker:
+            Type: 1
+            NumberOfElinksBc: 4
+        3:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        4:
+          Unpacker:
+            Type: 2
+            NumberOfElinksBc: 2
+        5:
+          Unpacker:
+            Type: 4
+            NumberOfElinksBc: 2
+      SelfTriggers: None
+      TcProcessors: None
