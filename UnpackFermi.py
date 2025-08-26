@@ -283,6 +283,30 @@ if __name__ == "__main__":
         # 2. Unpack the single packet into a DataFrame.
         #    We put it in a list because unpackPackets expects a list of packets.
         unpacked_df = unpackPackets([econ_packet], ACTIVE_LINKS)
+
+        # --- Task: Analyze eRx0 Channel Data ---
+        if not unpacked_df.empty:
+            # Select all columns that belong to eRx0's channel data
+            erx0_cols = [f'eRx00_ChData{i:02d}' for i in range(37)]
+            
+            # Get the data for the first event (row 0)
+            erx0_data = unpacked_df[erx0_cols].iloc[0]
+            
+            # Filter out inactive channels (which are empty strings)
+            active_channels = erx0_data[erx0_data != '']
+            
+            # The number of rows is the number of active channels with a 32-bit word
+            num_words_erx0 = len(active_channels)
+            
+            print("\n" + "="*50)
+            print("eRx0 Analysis:")
+            print(f"  - Found {num_words_erx0} active channels (32-bit words) for eRx0.")
+            print("="*50 + "\n")
+
+            # Display the data for the active channels
+            print("Data for active eRx0 channels:")
+            print(active_channels)
+            print("\n")
         
         # 3. Generate and save the plot for the first event (event 0)
         if not unpacked_df.empty:
