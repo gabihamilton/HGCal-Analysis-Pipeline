@@ -1,4 +1,26 @@
+# macOS
 .DS_Store
-.DS_Store
-.DS_Store
-.DS_Store
+
+# Generated outputs
+*.png
+*.pdf
+*.mp4
+*.jpg
+*.jpeg
+*.zip
+*.csv
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Conda environment
+env/
+
+# Data and old files
+old/
+Unpacked_data/
+investigation_plots/
+forGabi.txt
