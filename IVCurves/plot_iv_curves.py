@@ -5,7 +5,7 @@ import numpy as np
 import os
 import glob
 import argparse
-from matplotlib.ticker import ScalarFormatter, NullFormatter
+from matplotlib.ticker import LogFormatterSciNotation, NullFormatter
 
 # --- Configuration ---
 BASE_DATA_DIRECTORY = '.'
@@ -58,7 +58,7 @@ def create_individual_plot(csv_file, output_dir):
         ax.set_ylabel('Leakage Current [µA]')
         ax.set_xlim(0, 305)
         ax.set_ylim(1e-3, 2000)
-        ax.yaxis.set_major_formatter(ScalarFormatter())
+        ax.yaxis.set_major_formatter(LogFormatterSciNotation())
         ax.legend(loc='upper left')
         ax.grid(True, which="both", linestyle='--', linewidth=0.5, alpha=0.5)
         hep.cms.label(ax=ax, label="HGCal Cassette Testing", data=True, rlabel='')
@@ -104,7 +104,7 @@ def create_combined_plot(csv_files, output_dir):
         ax.set_xlim(0, 305)
         ax.set_ylim(1e-3, 2000) # Updated Y-limit to show low-current points
 
-        ax.yaxis.set_major_formatter(ScalarFormatter())
+        ax.yaxis.set_major_formatter(LogFormatterSciNotation())
         ax.legend(loc='upper left', title="Modules", bbox_to_anchor=(1.02, 1), ncol=2, fontsize=9)
         ax.grid(True, which="both", linestyle='--', linewidth=0.5, alpha=0.3)
         hep.cms.label(ax=ax, label="HGCal Cassette Testing", data=True, rlabel='Fermilab')
