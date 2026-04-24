@@ -4,6 +4,7 @@ import mplhep as hep
 import numpy as np
 import os
 import glob
+import argparse
 from matplotlib.ticker import ScalarFormatter, NullFormatter
 
 # --- Configuration ---
@@ -115,10 +116,30 @@ def create_combined_plot(csv_files, output_dir):
         print(f"Error in combined plot: {e}")
 
 if __name__ == "__main__":
-    data_dirs = sorted(glob.glob(os.path.join(BASE_DATA_DIRECTORY, 'iv_curve_data_*')))
-    if data_dirs:
-        latest_dir = data_dirs[-1]
-        csv_files = sorted(glob.glob(os.path.join(latest_dir, 'channel_*.csv')))
-        os.makedirs(OUTPUT_PLOT_DIRECTORY, exist_ok=True)
-        for f in csv_files: create_individual_plot(f, OUTPUT_PLOT_DIRECTORY)
-        create_combined_plot(csv_files, OUTPUT_PLOT_DIRECTORY)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--data-dir', default=None, help='Path to a specific iv_curve_data_* directory')
+    parser.add_argument('--output-dir', default=None, help='Where to save plots (default: ./iv_plots)')
+    args = parser.parse_args()
+
+    if args.data_dir:
+        data_dir = args.data_dir
+    else:
+        data_dirs = sorted(glob.glob(os.path.join(BASE_DATA_DIRECTORY, 'iv_curve_data_*')))
+        if not data_dirs:
+            print("No iv_curve_data_* directories found.")
+            exit(1)
+        data_dir = data_dirs[-1]
+
+    output_dir = args.output_dir if args.output_dir else OUTPUT_PLOT_DIRECTORY
+
+    csv_files = sorted(glob.glob(os.path.join(data_dir, 'channel_*.csv')))
+    if not csv_files:
+        print(f"No channel_*.csv files found in {data_dir}")
+        exit(1)
+
+    os.makedirs(output_dir, exist_ok=True)
+    print(f"Reading data from: {data_dir}")
+    print(f"Saving plots to:   {output_dir}")
+    for f in csv_files:
+        create_individual_plot(f, output_dir)
+    create_combined_plot(csv_files, output_dir)

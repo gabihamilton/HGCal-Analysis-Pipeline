@@ -7,3 +7,8 @@ dependencies:
   - numpy
   - matplotlib
   - mplhep
+  - scipy
+  - pytz
+  - pip
+  - pip:
+    - influxdb-client

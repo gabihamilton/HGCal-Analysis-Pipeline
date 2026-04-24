@@ -1,87 +1,204 @@
 # HGCAL Data Analysis Pipeline
 
-This script processes raw HGCAL data from text files, unpacks the binary packets, and generates plots for ADC, ADC-1, and noise distributions for each module.
+Tools for unpacking raw HGCAL data, generating IV curves, and monitoring cassette temperatures and voltages via InfluxDB.
 
 ---
 
-## Prerequisites
+## Environment
 
-Before you begin, ensure you have a Conda-based package manager installed, such as **Miniconda**, **Anaconda**, or **Micromamba**.
+```mermaid
+graph TD
+    ENV["hgcal-analysis\nConda environment\nPython 3.9"]
 
----
+    ENV --> CORE["Core\npandas · numpy · matplotlib · mplhep"]
+    ENV --> SCI["Scientific\nscipy"]
+    ENV --> TIME["Time / Timezone\npytz"]
+    ENV --> DB["Database\ninfluxdb-client"]
 
-## Installation
+    CORE --> UNPACK["Unpack.py\nUnpackFermi.py\nRaw data unpacking"]
+    CORE --> IV["IVCurves/\nplot_iv_curves.py\nanalyse_and_group_curves.py\nplot_comparison_curves.py"]
 
-Follow these steps to set up the environment and install the required packages.
+    CORE --> TEMP["analyze_temperatures.py\nanimate_temperatures.py"]
+    SCI  --> TEMP
 
-1.  **Clone the Repository (if applicable)**:
-    If you have this project in a Git repository, clone it first:
-    ```bash
-    git clone <your-repository-url>
-    cd <your-repository-name>
-    ```
+    DB   --> MON["investigate_module.py\nrun_all_investigations.py\nplot_timeseries.py\nplot_calibrated_reading.py"]
+    DB   --> VREF["plot_vref_vs_temp.py\nplot_vref_stability.py"]
+    TIME --> MON
+    TIME --> VREF
 
-2.  **Create the Environment from File**:
-    This repository includes an `environment.yml` file that defines all necessary packages. Open your terminal and use the command that matches your package manager.
-
-    * **For Micromamba users:**
-        ```bash
-        micromamba create -f environment.yml
-        ```
-
-    * **For Conda / Anaconda users:**
-        ```bash
-        conda env create -f environment.yml
-        ```
-    This will create a new environment named `hgcal-analysis`.
-
-3.  **Activate the Environment**:
-    You must activate the environment every time you want to run the script.
-    ```bash
-    micromamba activate hgcal-analysis
-    # OR for Conda users:
-    # conda activate hgcal-analysis
-    ```
-    Your terminal prompt should now show `(hgcal-analysis)`.
+    TEMP --> MAP["cassette_map.py\nSensor position map"]
+    MON  --> MAP
+```
 
 ---
 
-## Usage
+## Setup
 
-The main script `Unpack.py` is run from the command line and takes the name of your data folder as an input.
+### Prerequisites
 
-### Project Structure
+A Conda-based package manager: **Miniconda**, **Anaconda**, or **Micromamba**.
 
-Organize your data files in a folder. The script will look for this folder in the same directory where it is located.
+### Create the environment
+
+```bash
+# Conda / Anaconda
+conda env create -f environment.yml
+
+# Micromamba
+micromamba create -f environment.yml
+```
+
+### Activate the environment
+
+```bash
+conda activate hgcal-analysis
+# or
+micromamba activate hgcal-analysis
+```
+
+Your prompt should show `(hgcal-analysis)`.
+
+---
+
+## Scripts
+
+### Raw Data Unpacking
+
+**`Unpack.py`** / **`UnpackFermi.py`**
+
+Processes raw HGCAL `.txt` data files, decodes binary packets, and generates ADC, ADC-1, and noise plots.
+
 ```
 your-project-directory/
 ├── Unpack.py
 └── data/
-├── data_file_1.txt
-├── data_file_2.txt
-└── ...
+    ├── data_file_1.txt
+    └── ...
 ```
-
-### Running the Analysis
-
-To run the script, use the following command, replacing `data` with the name of your data folder.
 
 ```bash
 python Unpack.py data
+
+# Specify a different marker link (default: link6)
+python Unpack.py data --marker_link link0
 ```
 
-### Optional Arguments
+Output:
+- `Unpacked_data/` — decoded data as `.pkl` files
+- `Plots/` — output plots as `.pdf`
 
-* **`--marker_link`**: You can specify which link column contains the start-of-packet marker. It defaults to `link6`. If your marker is in a different link (e.g., `link0`), use this option:
+---
 
-    ```bash
-    python Unpack.py data --marker_link link0
-    ```
+### IV Curves
 
-### Output
+**`IVCurves/plot_iv_curves.py`**
 
-The script will generate two new folders:
+Generates individual per-channel IV plots and a combined overlay for all channels.
 
-* `Unpacked_data/`: Contains the processed and decoded data in `.pkl` format for faster re-loading.
-* `Plots/`: Contains the output plots in `.pdf` format.
+```bash
+# Run on a specific data directory
+python IVCurves/plot_iv_curves.py \
+  --data-dir ./iv_curve_data_2026-04-23_170750 \
+  --output-dir ./iv_plots_cold_2026-04-23
 
+# Without arguments: picks the latest iv_curve_data_* folder in the current directory
+python IVCurves/plot_iv_curves.py
+```
+
+**`IVCurves/analyse_and_group_curves.py`**
+
+Groups channels by leakage and breakdown behaviour (thresholds: 10 µA leaky, 100 µA breakdown).
+
+```bash
+python IVCurves/analyse_and_group_curves.py
+```
+
+**`IVCurves/plot_comparison_curves.py`**
+
+Individual per-channel plots with reference sensor IDs annotated in the title.
+
+```bash
+python IVCurves/plot_comparison_curves.py
+```
+
+---
+
+### Temperature Monitoring
+
+**`analyze_temperatures.py`**
+
+Retrieves RTD sensor data from InfluxDB, interpolates across the cassette, and produces heatmaps. Requires `cassette_map.py` in the same directory.
+
+```bash
+python analyze_temperatures.py
+```
+
+**`animate_temperatures.py`**
+
+Generates an animated `.mp4` of cassette temperature distribution over time.
+
+```bash
+python animate_temperatures.py
+```
+
+---
+
+### InfluxDB Module Investigation
+
+Requires an InfluxDB instance running locally (LABC2 on port 8086, LABC3 on port 8087) and the token set as an environment variable:
+
+```bash
+export INFLUXDB_TOKEN=your_token_here
+```
+
+**`investigate_module.py`**
+
+Queries HV, current, and temperature for a single module.
+
+```bash
+python investigate_module.py
+```
+
+**`run_all_investigations.py`**
+
+Batch-runs `investigate_module.py` across all cassette modules.
+
+```bash
+python run_all_investigations.py
+```
+
+**`plot_timeseries.py`**
+
+Time-series plots for all trains over a configurable time window.
+
+```bash
+python plot_timeseries.py
+```
+
+**`plot_calibrated_reading.py`**
+
+Plots calibrated sensor readings from InfluxDB.
+
+```bash
+python plot_calibrated_reading.py
+```
+
+---
+
+### VREF Calibration (lpGBT)
+
+**`plot_vref_vs_temp.py`**
+
+Plots `VREF_TUNE` calibration values vs internal junction temperature (`tj_user`) across both databases.
+
+```bash
+python plot_vref_vs_temp.py
+```
+
+**`plot_vref_stability.py`**
+
+Temperature stability analysis for lpGBT VREF across a run.
+
+```bash
+python plot_vref_stability.py
+```
